@@ -1,5 +1,9 @@
 # TO DO
-- Put caps on the first and last slides so people can't go beyond what's available
+- Add animations based on direction
+- Add README
+- Turn into plugin for easy use in new projects
+- Release dependency on keypress.js
+- Figure out why when progressing slides, it flashes tangent slides
 
 
 

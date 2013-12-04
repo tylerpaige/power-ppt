@@ -19,21 +19,25 @@ div{
 	bottom: 0;
 }
 .slide{
-	-webkit-transition: all .25s ease-in-out;
+    visibility: hidden;
+    -webkit-transition: all 1s ease-in-out;
 }
 .slide .content{
 	width: 100%;
 	height: 100%;
-	background: whitesmoke;
 }
-.top>.content{
-	z-index: 1000;
-}
-
-.top{
+/*.top, .top>.content{
 	z-index: 999;
 }
+.change, .change>.content{
+    z-index: 998;
+}*/
 
-.next{
-	z-index: 1000;
+.visible{
+    visibility: visible;
+    z-index: 800;
 }
+
+/* TEMP STYLES */
+.origin>.content{ background: indianred; }
+.two>.content{ background: cadetblue; }
