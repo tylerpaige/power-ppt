@@ -1,0 +1,39 @@
+html, body, #container{
+	width: 100%;
+	height: 100%;
+}
+#container{
+	overflow: hidden;
+}
+#container>.slide{
+	background: indianred;
+}
+#container>.slide>.slide{
+	background: cadetblue;
+}
+div{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.slide{
+	-webkit-transition: all .25s ease-in-out;
+}
+.slide .content{
+	width: 100%;
+	height: 100%;
+	background: whitesmoke;
+}
+.top>.content{
+	z-index: 1000;
+}
+
+.top{
+	z-index: 999;
+}
+
+.next{
+	z-index: 1000;
+}
