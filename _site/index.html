@@ -69,9 +69,9 @@ $(function() {
         if($(cur).parent().hasClass('slide')){ // only ascend if the target is a slide, not the container
             cur = $(cur).parent('.slide');
             console.log('supposed parent', $(cur));
-            $(cur).addClass('slideDown');
-            $(cur).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
-                $(this).addClass('visible').removeClass('slideDown').children('.visible').removeClass('visible');
+            $(cur).children('.content').addClass('slideDown');
+            $(cur).children('.content').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
+                $(this).parent().addClass('visible').children('.content').removeClass('slideDown').siblings('.visible').removeClass('visible');
             });
         }
     });

@@ -25,6 +25,7 @@ div{
 .slide .content{
 	width: 100%;
 	height: 100%;
+	-webkit-transition: all 1s ease-in-out;
 }
 /*.top, .top>.content{
 	z-index: 999;
