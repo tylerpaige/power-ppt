@@ -8,18 +8,23 @@ This tool hopes to utilize the slideshow format for a more free-flow thought pro
 
 ## Controls
 The live slideshow is controlled using the arrow keys. 
+
 ### Advancing
 - **→** will advance the slideshow on a continuous linear progression. If the user is on a tangent, pressing **→** will continue down that tangent.
 - **↓** will take the slideshow on a tangent off the current slide. If a user is on a tangent, pressing **↓** will go off on a new tangent.
+
 ### Backtracking
 - **←** will take the slideshow to previous slide in the continuous linear progression. 
 - **↑** will take the slideshow to last point of departure. If a user is on a tangent, pressing **↑** will return to the origin of the tangent.
 
 ## Usage
 *Usage isn't exactly the most friendly right now...*
+
 Using this plugin (ironically) relies on a pretty strict structure. Please use `<div>`s or equivalent block element to contain slides, not list items.
 
-```<div id="s1" class="slide">
+
+``` html
+<div id="s1" class="slide">
 	<div class="content">Content for slide #s1</div>
 	
 	<div id="t1s1" class="slide">
@@ -45,8 +50,12 @@ Using this plugin (ironically) relies on a pretty strict structure. Please use `
     <div id="t2s3" class="slide">
         <div class="content">Content for the linear progression of the tangent off slide #s3</div>
     </div>
-</div>```
+</div>
+```
+
 
 Initialize the plugin by selecting the slideshow container and passing a selector that matches each slide. If no parameter is passed in, the default selector will be `.slide`.
 
-```$('#container').powerPPT('.slide');```
+``` js
+$('#container').powerPPT('.slide');
+```
