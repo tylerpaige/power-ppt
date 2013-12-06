@@ -1,12 +1,10 @@
 # TO DO
 - Add README
-- Turn into plugin for easy use in new projects
 - Release dependency on keypress.js
-- Figure out how to handle multiple, fast key strokes
-    - Proposal: listen for number of key strokes, and then animate based on that... (maybe?)
-    - Perhaps a throttle?
-- Slight problem: it SHOULD be that the most recent target should have the highest z-index
 - Quickly switching right and then left. Doesn't work! I need a better way to control quick key inputs. Like... have the switches be functions that have a parameter, and have the key events just count what number to pass to the functions. Still, I like the idea of the action being fairly instantaneous
+    - I sort of understand. When you go to the right, the previous slide is being obscured by the new current slide. When you go to the left, the next (sequentially) slide is being obscured by the new current slide. When you go to the right, then immediately to the left, the slide that should be obscured has to start obscuring the next slide. It cannot be in two places at once (both below and on top).
+    - How does Google Docs or Powerpoint solve this problem?
+    - This is an edge case that I am simply not going to worry about for now
 
 
 

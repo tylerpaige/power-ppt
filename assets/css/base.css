@@ -9,6 +9,7 @@ html, body, #container{
 }
 #container{
 	overflow: hidden;
+	background: black;
 }
 #container>.slide{
 	background: indianred;
