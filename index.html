@@ -12,104 +12,64 @@
 <script>
 var cur; // temporarily global var for debugging
 $(function() {	
-
-	// if you can find out what position (nth child) a selection is, we don't have to worry about saving x and y values
-	cur = $('#container').children('.slide').eq(0);
-	$(cur).addClass('visible');
-	
-//  Back-up. This one is working.
-//	keypress.combo('right', function() {
-//		index = cur.index()-1; //Every slide has a content <div> that we need to ignore (hence, minus 1). Slide 1 will be index()=1, but we want it to be 0
-//		if(index < $(cur).siblings('.slide').length){ //Don't need to addBack() because index() starts at 0
-//			target = index+1; //Progressing, we want the next slide (i.e. incremented index). If we want to go from 1 to 2, we want the target index to be 2
-//			cur = $(cur).siblings('.slide').addBack().eq(target); // so find all the .slide elements in the container (not just the siblings), and get the targeted index. eq() returns the nth element that matches the selection (i.e. all the slide elements in the container).
-//			$(cur).addClass('top').siblings().removeClass('top');
-//		} else {
-//			// do nothing
-//			console.log('Currently on the last slide. Nowhere forward to go');
-//		}
-//	});
-
-    var hidePrev = function(transition){
-        $(cur).siblings('.'+transition).removeClass(transition);
-    };
+    var transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd',
+        index,
+        cur = $('#container').children('.slide').eq(0);
+    $(cur).addClass('visible');
     
     keypress.combo('right', function() {
-    	index = cur.index()-1;
+    	index = $(cur).siblings('.slide').addBack().index(cur);
     	if(index < $(cur).siblings('.slide').length){
     		target = index+1; 
     		cur = $(cur).siblings('.slide').addBack().eq(target);
-        	$(cur).addClass('slideLeft'); 
-        	$(cur).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
-        	    $(this).addClass('visible').removeClass('slideLeft').siblings('.visible').removeClass('visible');
-        	});
+    		
+    		$(cur).siblings('.slide:lt('+target+').slideLeft').one(transitionEnd, function(){ //if other slides are still moving, wait for them to stop
+//    		    $(this).removeClass('slideLeft').removeClass('visible');  then remove their classes
+    		    $('.slideLeft').add('.slideRight').not(cur).removeClass('slideLeft slideRight visible');
+    		});
+    		
+        	$(cur).addClass('slideLeft recent').one(transitionEnd, function(){ //when this one finished moving
+        	    $(cur).addClass('visible').removeClass('slideLeft recent').siblings().not('.recent').removeClass('visible slideLeft slideRight'); //remove the animation class, add visible class, make sure nothing else is visible
+        	}); 
+        	$('.recent').not(cur).removeClass('recent');
         }
     });
     keypress.combo('left', function() {
-        index = cur.index()-1;
+        index = $(cur).siblings('.slide').addBack().index(cur);
         if(index > 0){
             target = index-1;
             cur = $(cur).siblings('.slide').addBack().eq(target);
-            $(cur).addClass('slideRight');
-            $(cur).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
-                $(this).addClass('visible').removeClass('slideRight').siblings('.visible').removeClass('visible');
+            
+            $(cur).siblings('.slide.slideRight').addBack().filter(':gt('+target+')').one(transitionEnd, function() {
+                 $('.slideLeft').add('.slideRight').not(cur).removeClass('slideLeft slideRight visible');
+                 console.log('test this selection. cur:', $(cur), 'do not include cur:', $('slideLeft').add('.slideRight'));
+//                $(this).removeClass('slideRight').removeClass('visible');
             });
+            
+            $(cur).addClass('slideRight recent').one(transitionEnd, function() {
+                $(cur).addClass('visible').removeClass('slideRight recent').siblings().not('.recent').removeClass('visible slideLeft slideRight');
+            });
+            $('.recent').not(cur).removeClass('recent');
         }
     });
     keypress.combo('down', function() {
         if($(cur).children('.slide').length > 0){
             cur = $(cur).children('.slide').eq(0);
-            $(cur).addClass('slideUp');
-            $(cur).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
+            $(cur).addClass('slideUp').one(transitionEnd, function() {
                 $(this).addClass('visible').removeClass('slideUp').parent('.visible').removeClass('visible');
             });
         }
     });
     keypress.combo('up', function() {
         if($(cur).parent().hasClass('slide')){ // only ascend if the target is a slide, not the container
-            cur = $(cur).parent('.slide');
-            console.log('supposed parent', $(cur));
-            $(cur).children('.content').addClass('slideDown');
-            $(cur).children('.content').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
-                $(this).parent().addClass('visible').children('.content').removeClass('slideDown').siblings('.visible').removeClass('visible');
+            $(cur).siblings('.content').addClass('slideDown').one(transitionEnd, function(){
+                $(cur).parent().addClass('visible');
+                $(cur).removeClass('visible');
+                $(cur).siblings('.content').removeClass('slideDown');  
+                cur = $(cur).parent(); //Reset after animation end so you don't mess up the selectors
             });
         }
     });
-
-
-
-
-//
-//	keypress.combo('left', function() {
-//		index = cur.index()-1; //Again, ignore the content <div>. Slide 2 should be index=1
-//		target = index-1; //And the targeted element should be index=0
-//		if(index < 1){ //if index=0 (i.e. Slide #1)
-//			// do nothing
-//			console.log('Currently on the first slide. Nowhere back to go');
-//		} else {
-//			cur = $(cur).siblings('.slide').addBack().eq(target); //Again, get all the .slide elements in the container, and return the targeted indexed element
-//			$(cur).addClass('top').siblings().removeClass('top');
-//		}
-//	});
-//	keypress.combo('down', function() {
-//		// at this stage, we don't care about the index. We only care about the first child .slide
-//		if($(cur).children('.slide').length > 0){
-//    		$(cur).removeClass('top');
-//    		cur = $(cur).children('.slide').eq(0);
-//    		$(cur).addClass('top');
-//    	} else {
-//    	    console.log('do nothing');
-//    	}
-//	});
-//	keypress.combo('up', function() {
-//	    if($(cur).parent().hasClass('slide')){ // only ascend if the target is a slide, not the container
-//	        $(cur).removeClass('top');
-//	        cur = $(cur).parent('.slide');
-//	        $(cur).addClass('top');
-//	    } else {
-//	        console.log('do nothing');
-//    	}
-//	});
 });
 </script>	
 </head>
@@ -117,28 +77,47 @@ $(function() {
 <div id="container">
 	<div class="directions">Use the arrow keys to control the Powerpoint</div>
 	<div class="slide origin">
-		<div class="content">Slide #1</div>
+		<div class="content">
+		    <div class="caption">Slide No. 1. The origin.</div>
+		    <div class="img"><img src="images/1.jpg" /></div>
+		</div>
+		<!-- Tangents -->
 		<div class="slide">
 			<div class="content">Tangent of Slide #1</div>
-			<div class="slide"> 
+			<div class="slide yellow"> 
 				<div class="content">Tangent of Tangent of Slide #1</div>
 			</div>
 		</div>
 		<div class="slide origin">
-			<div class="content">Progressing the Tangent of Slide #1</div>
+			<div class="content">
+    			<div class="caption">Progressing the Tangent of Slide #1</div>
+    			<div class="img"><img src="images/2.jpg" /></div>
+			</div>
 		</div>
 		<div class="slide">
 			<div class="content">Second progression of the Tangent of Slide #1</div>
 		</div>
 	</div>
 	<div class="slide two">
-		<div class="content">Slide #2</div>
+		<div class="content">
+		    <div class="caption white">Slide #2</div>
+		    <div class="img"><img src="images/2.jpg" /></div>
+		</div>
 	</div>
 	<div class="slide">
-		<div class="content">Slide #3</div>
+		<div class="content">
+		    <div class="caption white">Slide #3</div>
+		    <div class="img"><img src="images/3.jpg" /></div>
+		</div>
 	</div>
-	<div class="slide">
+	<div class="slide yellow">
 		<div class="content">Slide #4</div>
+	</div>
+	<div class="slide">
+		<div class="content">Slide #5</div>
+	</div>
+	<div class="slide two">
+		<div class="content">Slide #6</div>
 	</div>
 </div>
 </body>

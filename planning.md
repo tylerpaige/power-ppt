@@ -1,10 +1,12 @@
 # TO DO
-- Add animations based on direction
 - Add README
 - Turn into plugin for easy use in new projects
 - Release dependency on keypress.js
-- Figure out why when progressing slides, it flashes tangent slides
-
+- Figure out how to handle multiple, fast key strokes
+    - Proposal: listen for number of key strokes, and then animate based on that... (maybe?)
+    - Perhaps a throttle?
+- Slight problem: it SHOULD be that the most recent target should have the highest z-index
+- Quickly switching right and then left. Doesn't work! I need a better way to control quick key inputs. Like... have the switches be functions that have a parameter, and have the key events just count what number to pass to the functions. Still, I like the idea of the action being fairly instantaneous
 
 
 
