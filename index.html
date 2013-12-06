@@ -21,15 +21,12 @@ $(function() {
     	index = $(cur).siblings('.slide').addBack().index(cur);
     	if(index < $(cur).siblings('.slide').length){
     		target = index+1; 
-    		cur = $(cur).siblings('.slide').addBack().eq(target);
-    		
-    		$(cur).siblings('.slide:lt('+target+').slideLeft').one(transitionEnd, function(){ //if other slides are still moving, wait for them to stop
-//    		    $(this).removeClass('slideLeft').removeClass('visible');  then remove their classes
-    		    $('.slideLeft').add('.slideRight').not(cur).removeClass('slideLeft slideRight visible');
-    		});
-    		
+    		cur = $(cur).siblings('.slide').addBack().eq(target);    		
         	$(cur).addClass('slideLeft recent').one(transitionEnd, function(){ //when this one finished moving
-        	    $(cur).addClass('visible').removeClass('slideLeft recent').siblings().not('.recent').removeClass('visible slideLeft slideRight'); //remove the animation class, add visible class, make sure nothing else is visible
+        	    //The trick here is to not use $(cur) as a selector, as this variable may be updated before the transition end
+        	    //Also, only affect the previous slides
+        	    //You could perhaps be more specific and say, prevAll('.slideLeft')
+        	    $(this).addClass('visible').removeClass('slideLeft recent').prevAll().removeClass('visible slideLeft slideRight recent'); //remove the animation class, add visible class, make sure nothing else is visible
         	}); 
         	$('.recent').not(cur).removeClass('recent');
         }
@@ -40,16 +37,13 @@ $(function() {
             target = index-1;
             cur = $(cur).siblings('.slide').addBack().eq(target);
             
-            $(cur).siblings('.slide.slideRight').addBack().filter(':gt('+target+')').one(transitionEnd, function() {
-                 $('.slideLeft').add('.slideRight').not(cur).removeClass('slideLeft slideRight visible');
-                 console.log('test this selection. cur:', $(cur), 'do not include cur:', $('slideLeft').add('.slideRight'));
-//                $(this).removeClass('slideRight').removeClass('visible');
-            });
-            
             $(cur).addClass('slideRight recent').one(transitionEnd, function() {
-                $(cur).addClass('visible').removeClass('slideRight recent').siblings().not('.recent').removeClass('visible slideLeft slideRight');
+                //so you hit left, and the newest current slide gets assigned this event
+                //When it's done moving, make it visible, then remove it's animation classes
+                //Also when it's done moving, remove all the animation and visible classes from the slides that were already advanced
+                $(this).addClass('visible').removeClass('slideRight recent').nextAll().removeClass('visible slideRight recent');
             });
-            $('.recent').not(cur).removeClass('recent');
+            $('.recent').not(cur).removeClass('recent'); //Only most recent advance should be called "Recent"
         }
     });
     keypress.combo('down', function() {
@@ -88,7 +82,7 @@ $(function() {
 				<div class="content">Tangent of Tangent of Slide #1</div>
 			</div>
 		</div>
-		<div class="slide origin">
+		<div class="slide origin one">
 			<div class="content">
     			<div class="caption">Progressing the Tangent of Slide #1</div>
     			<div class="img"><img src="images/2.jpg" /></div>
@@ -104,19 +98,19 @@ $(function() {
 		    <div class="img"><img src="images/2.jpg" /></div>
 		</div>
 	</div>
-	<div class="slide">
+	<div class="slide three">
 		<div class="content">
 		    <div class="caption white">Slide #3</div>
 		    <div class="img"><img src="images/3.jpg" /></div>
 		</div>
 	</div>
-	<div class="slide yellow">
+	<div class="slide yellow four">
 		<div class="content">Slide #4</div>
 	</div>
-	<div class="slide">
+	<div class="slide five">
 		<div class="content">Slide #5</div>
 	</div>
-	<div class="slide two">
+	<div class="slide six">
 		<div class="content">Slide #6</div>
 	</div>
 </div>
