@@ -1,5 +1,8 @@
 # PowerPPT
 
+## Live Demo
+*Check out a simple demonstration here: [http://tylerpaige.com/secrets/powerppt/example](http://tylerpaige.com/secrets/powerppt/example)*
+
 This is a pretty simple way to create a multi-directional "Powerpoint" slideshow. Its purpose to allow for tangents in format that is fairly linear. While a normal slide show progresses from Slide #1 to #2 to #3 in a linear progression, this jQuery plugin allows the user to go on a tangent off a slide.
 
 In this way, a user has two basic options at every slide: to progress linearly along the same trajectory (i.e. to advance to the "next" slide), or to go off on a tangent. If the user goes off on a tangent, they can then either follow that tangent or go off on another tangent.
