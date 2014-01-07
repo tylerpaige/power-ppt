@@ -12,48 +12,28 @@ html{
 }
 
 
-.slide.one{
+.one{
     background: indianred;
 }
-.slide.two{
+.two{
     background: lightBlue;
 }
-.slide.three{
+.three{
     background: bisque;
 }
-.slide.four{
+.four{
     background: lemonchiffon;
 }
-.slide.five{
+.five{
     background: whitesmoke;
 }
-.slide.six{
+.six{
     background: dimgray;
 }
 
-.slide.tangent{
+.tangent{
     background: mediumseagreen;
 }
-.slide.tangent .tangent{
+.tangent .tangent{
     background: lawngreen;
-}
-
-#jump-start{
-	background: mediumturquoise;
-}
-#jump-end{
-	background: sandybrown;
-
-/* Maze Specific */
-.right{
-    background: darkseagreen;
-}
-.down{
-    background: sandybrown;
-}
-.right{
-    background: midnightblue;
-}
-.left{
-    background: springgreen;
 }
