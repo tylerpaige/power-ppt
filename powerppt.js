@@ -29,9 +29,6 @@
                 
                 $(cur).addClass('slideRight recent').one(transitionEnd, function() {
                    $(this).addClass('visible').removeClass('slideRight recent').nextAll().removeClass('visible slideRight recent');
-                   //hypothetical: if i go right one, then left quickly...
-                   //so right is still moving when i hit left...
-                   //at 1, hit right now at 2, hit left back at 1... 2 is a next()
                 });
                 $('.recent').not(cur).removeClass('recent'); //Only most recent advance should be called "Recent"
             }
@@ -46,11 +43,11 @@
         });
         keypress.combo('up', function() {
             if($(cur).parent().hasClass(slideClass)){ // only ascend if the target is a slide, not the container
-                $(cur).siblings('.content').addClass('slideDown').one(transitionEnd, function(){
-                    $(cur).parent().addClass('visible');
-                    $(cur).removeClass('visible');
-                    $(cur).siblings('.content').removeClass('slideDown');  
-                    cur = $(cur).parent(); //Reset after animation end so you don't mess up the selectors
+                index = cur;
+                cur = cur.parent();
+                index.siblings('.content').parent().addBack().addClass('visible');
+                index.addClass('slideOut').one(transitionEnd, function() {
+                    $(this).removeClass('visible slideOut').siblings().removeClass('slideOut recent visible');
                 });
             }
         });
