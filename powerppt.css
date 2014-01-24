@@ -4,77 +4,220 @@
 - the #container is an immediate child of the body. */
 
 html{
-    /* Basic Style Changes */
     font-size: 62.5%;
+    font-family: Georgia, Garamond, Baskerville, serif;
+    line-height: 2.6rem;
 }
-html, body, #container{
+html, body{
 	width: 100%;
 	height: 100%;
-	position: relative;
 }
 #container{
-	overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: relative;
 	background: black;
+	overflow-x: hidden;
+	overflow-y: visible;
 }
 .slide{
     visibility: hidden;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    overflow: hidden;
+    background: black;
 }
-.visible{
-    visibility: visible;
-    z-index: 800;
-}
-.slideUp, .slideDown,
-.slideRight, .slideLeft{
-    z-index: 900;
-}
-.recent, .slide.recent,
-.slideLeft.recent, .slideRight.recent,
-.slideUp.recent, .slideDown.recent{
-    z-index: 1000;
-}
-
-
-/* For a slide's content */
 .slide .content{
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	padding: 20px;
-	position: relative;
-	
-	/* Basic Style Changes */
 	font-size: 2.4rem;
+	position: relative;
+	display: table;
 }
+
+/* Basic Styles for function */
+.visible{
+    visibility: visible;
+    z-index: 800;
+}
+.slideDown, .slideOut, .slideUp, .slideLeft, .slideRight{
+    z-index: 900;
+}
+
+/* Loader */
+.firstLoad{
+    display: none;
+}
+.loader{
+    width: 90px;
+    height: 40px;
+    position: fixed;
+    left: 50%;
+    top: 0;
+    margin-left: -30px;
+    padding-top: 12px;
+    background: rgba(0,0,0,.9);
+    color: white;
+    text-align: center;
+    font-size: 1.0rem;
+    font-style: italic;
+    z-index: 1000;
+}
+
+/* Controls */
+#controls{
+    width: 62px;
+    position: absolute;
+    left: 15px;
+    font-size: 10pt;
+    color: black;
+    text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
+    z-index: 1001;
+}
+.up, .down{
+    height: 25px;
+    clear: both;
+    text-align: center;
+}
+.left, .right{
+    width: 20px;
+    height: 26px;
+}
+.left{
+    float: left;
+    text-align: left;
+}
+.right{
+    float: right;
+    text-align: right;
+}
+.right::after{
+    clear: both;
+    content: '';
+}
+
+
+/* Image fitting styles */
+.content {
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+}
+.stretch, .contain{
+    background-size: contain;
+}
+.fill, .cover{
+    background-size: cover;
+}
+
+/* Text slides */
+.slide.text{
+    background: whitesmoke;
+    height: auto;
+}
+.slide.text.visible{
+    overflow-y: visible;
+}
+.slide.text>.content{
+    width: 50%;
+    max-width: 700px;
+    margin: auto;
+    padding-top: 5%;
+    text-align: left;
+}
+.slide.text>.content p+p, .slide.text>.content img+p, .slide.text>.content p+img,
+.slide.text>.content p+h1, .slide.text>.content h1+p,
+.slide.text>.content p+h2, .slide.text>.content h2+p,
+.slide.text>.content p+h3, .slide.text>.content h3+p{
+    margin-top: 2.4rem;
+}
+.slide.text>.content p+p{
+    text-indent: 5rem;
+}
+
+/* Caption Styles */
 .content .caption{
     position: absolute;
     left: 0;
     right: 0;
     bottom: 5%;
-    z-index: 2;
     
-    /* Basic Style Changes */
     text-align: center;
+    z-index: 2;
 }
-.caption.black{ color: black; }
-.caption.white{ color: white; }
-.content .img{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+.caption.gradient{
     bottom: 0;
-    z-index: 1;
-    text-align: center;
+    padding: 4% 0 2% 0;
+
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+    
+    color: white;
 }
-.content .img img{
-    max-height: 100%;
-    max-width: 100%;
+
+.caption.whiteGradient{
+    bottom: 0;
+    padding: 4% 0 2% 0;
+
+    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0.65))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00FFFFFF', endColorstr='#a6FFFFFF',GradientType=0 ); /* IE6-9 */
+    
+    color: black;
+}
+.caption.block{
+    background: whitesmoke;
+}
+
+/* Centered Text options (not captions) */
+
+.slide:not(.text)>.content>p, .content>.text,
+.slide:not(.text)>.content>h1, .slide>.content>h2, .slide>.content>h3{
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 25%;
+}
+
+/* Text styles for captions and not */
+.black{ color: black; }
+.white{ color: white; }
+.yellow{ color: yellow; }
+.outline, .black.outline{
+    text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
+}
+.white.outline, .yellow.outline{
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+.yellowOutline{
+    text-shadow: 1px 0 0 yellow, 0 -1px 0 yellow, 0 1px 0 yellow, -1px 0 0 yellow;
+}
+.shadow{
+    text-shadow: 0 0 10px rgba(0,0,0,.4);
+}
+
+
+
+
+/* Misc Fixes */
+.slideDown, {
+    z-index: 1000;
+}
+.recent, .slide.recent, .slideLeft.recent, .slideRight.recent, .slideUp.recent, .slideDown.recent{ /*The most recent slide change should be on top*/
+    z-index: 1000;
 }
 
 
@@ -85,8 +228,6 @@ Available here: www.justinaguilar.com/animations/ */
 slideDown
 ==============================================
 */
-
-
 .slideDown{
 	animation-name: slideDown;
 	-webkit-animation-name: slideDown;	
@@ -99,7 +240,6 @@ slideDown
 
 	visibility: visible !important;						
 }
-
 @keyframes slideDown {
 	0% {
 		transform: translateY(-100%);
@@ -108,7 +248,6 @@ slideDown
 		transform: translateY(0%);
 	}		
 }
-
 @-webkit-keyframes slideDown {
 	0% {
 		-webkit-transform: translateY(-100%);
@@ -123,8 +262,6 @@ slideDown
 slideOut
 ==============================================
 */
-
-
 .slideOut{
     z-index: 900;
 
@@ -139,7 +276,6 @@ slideOut
 
 	visibility: visible !important;						
 }
-
 @keyframes slideOut {
 	0% {
 		transform: translateY(0%);
@@ -148,7 +284,6 @@ slideOut
 		transform: translateY(100%);
 	}		
 }
-
 @-webkit-keyframes slideOut {
 	0% {
 		-webkit-transform: translateY(0%);
@@ -163,8 +298,6 @@ slideOut
 slideUp
 ==============================================
 */
-
-
 .slideUp{
 	animation-name: slideUp;
 	-webkit-animation-name: slideUp;	
@@ -177,7 +310,6 @@ slideUp
 
 	visibility: visible !important;			
 }
-
 @keyframes slideUp {
 	0% {
 		transform: translateY(100%);
@@ -186,7 +318,6 @@ slideUp
 		transform: translateY(0%);
 	}	
 }
-
 @-webkit-keyframes slideUp {
 	0% {
 		-webkit-transform: translateY(100%);
@@ -201,8 +332,6 @@ slideUp
 slideLeft
 ==============================================
 */
-
-
 .slideLeft{
 	animation-name: slideLeft;
 	-webkit-animation-name: slideLeft;	
@@ -215,7 +344,6 @@ slideLeft
 
 	visibility: visible !important;	
 }
-
 @keyframes slideLeft {
 	0% {
 		transform: translateX(150%);
@@ -224,7 +352,6 @@ slideLeft
 		transform: translateX(0%);
 	}
 }
-
 @-webkit-keyframes slideLeft {
 	0% {
 		-webkit-transform: translateX(150%);
@@ -239,8 +366,6 @@ slideLeft
 slideRight
 ==============================================
 */
-
-
 .slideRight{
 	animation-name: slideRight;
 	-webkit-animation-name: slideRight;	
@@ -253,7 +378,6 @@ slideRight
 
 	visibility: visible !important;	
 }
-
 @keyframes slideRight {
 	0% {
 		transform: translateX(-150%);
@@ -262,7 +386,6 @@ slideRight
 		transform: translateX(0%);
 	}	
 }
-
 @-webkit-keyframes slideRight {
 	0% {
 		-webkit-transform: translateX(-150%);

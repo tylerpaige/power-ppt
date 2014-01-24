@@ -12,28 +12,28 @@ html{
 }
 
 
-.one{
+.slide.one{
     background: indianred;
 }
-.two{
+.slide.two{
     background: lightBlue;
 }
-.three{
+.slide.three{
     background: bisque;
 }
-.four{
+.slide.four{
     background: lemonchiffon;
 }
-.five{
+.slide.five{
     background: whitesmoke;
 }
-.six{
+.slide.six{
     background: dimgray;
 }
 
-.tangent{
+.slide.tangent{
     background: mediumseagreen;
 }
-.tangent .tangent{
+.slide.tangent .tangent{
     background: lawngreen;
 }
