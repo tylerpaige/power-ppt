@@ -37,3 +37,10 @@ html{
 .slide.tangent .tangent{
     background: lawngreen;
 }
+
+#jump-start{
+	background: mediumturquoise;
+}
+#jump-end{
+	background: sandybrown;
+}
