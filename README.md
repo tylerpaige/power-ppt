@@ -99,7 +99,7 @@ PowerPPT remembers the source of a jump, so hitting the escape key after jumping
 ## Options
 
 Option    | Description     | Default Value    | Possible Values
------------------------------------------------------------------
+--------- | --------------- | ---------------- | ---------------
 bgimgs    | **boolean**: if an `<img>` element is found in the slide's content, make that image the slide's background image | true | false
 controls | **boolean**: display a 4-arrow indicator depending on what directions a user can navigate from the current slide | false | true
 loader | **URL**: loader image for slides that are still downloading images | false (no loader) | _path/to/image.gif_
@@ -112,16 +112,18 @@ I've included a few styles you can use for your slides. [Check out the demo](htt
 
 #### Background image styles
 Unless you've set the `bgimgs` option to false, powerPPT will make an `img` element in the `.content` the slide's background image. These classes will control the image's fitting when applied to the `.content`
+
 Class | Description
--------------------
+----- | -----------
 *default* | image centered in the middle of the frame | *N/A*
 `.fill` or `.cover` | enlarge the image until it covers the entire frame
 `.stretch` or `.contain` | enlarge the image until it covers the frame, but do not crop either dimension
 
 #### Text Styles
 Classes that change the appearance of text when applied to the `.content` element
+
 Class | Description
--------------------
+----- | -----------
 `.white`| white text
 `.yellow`| yellow text
 `.outline`| give 1px outline to text (white outline for black text, black outline for white/yellow text)
@@ -129,8 +131,9 @@ Class | Description
 `.shadow`| add a subtle dropshadow to the text
 
 #### Text Positioning
+
 Class | Description
--------------------
+----- | -----------
 *default* | if it is the only child element of `.content`, horizontally and vertically centered; black 
 `.center` | Apply to a block wrapper to horizontally and vertically center a group of elements
 `.text` | allows the text to scroll vertically. *Apply the entire slide, not just the content*
@@ -138,8 +141,9 @@ Class | Description
 
 #### Caption Styles
 Classes for a block element `.caption` (a child of the `.content` element)
+
 Class | Description
--------------------
+----- | -----------
 *default* | aligned to bottom of frame, centered, black. All text styles can be applied specifically to a caption.
 `.gradient` | applies a black-to-transparent background gradient to the caption
 `.whiteGradient` | same as above, but with a white gradient
