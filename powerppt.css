@@ -74,19 +74,19 @@ html, body{
     width: 62px;
     position: absolute;
     left: 15px;
-    font-size: 10pt;
+    font-size: 14pt;
     color: black;
     text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
     z-index: 1001;
 }
 .up, .down{
-    height: 25px;
+    height: 22px;
     clear: both;
     text-align: center;
 }
 .left, .right{
     width: 20px;
-    height: 26px;
+    height: 22px;
 }
 .left{
     float: left;
@@ -185,8 +185,7 @@ html, body{
 
 /* Centered Text options (not captions) */
 
-.slide:not(.text)>.content>p, .content>.text,
-.slide:not(.text)>.content>h1, .slide>.content>h2, .slide>.content>h3{
+.slide:not(.text)>.content>*:not(.content):only-child, .slide>.content>.center{
     display: table-cell;
     vertical-align: middle;
     padding: 0 25%;
@@ -393,4 +392,80 @@ slideRight
 	100% {
 		-webkit-transform: translateX(0%);
 	}
+}
+
+/*
+==============================================
+jumpIn
+==============================================
+*/
+
+
+.jumpIn{
+	animation-name: jumpIn;
+	-webkit-animation-name: jumpIn;	
+
+	animation-duration: 0.7s;	
+	-webkit-animation-duration: 0.7s;
+
+	animation-timing-function: ease;	
+	-webkit-animation-timing-function: ease;
+
+	visibility: visible !important;	
+}
+
+@keyframes jumpIn {
+	0% {
+		transform: translateY(100%) scale(0.6) scaleY(0.5);
+	}
+	100% {
+		transform: translateY(0%) scale(1) scaleY(1);
+	}	
+}
+
+@-webkit-keyframes jumpIn {
+	0% {
+		-webkit-transform: translateY(100%) scale(0.6) scaleY(0.5);
+	}
+	100% {
+		-webkit-transform: translateY(0%) scale(1) scaleY(1);
+	}	
+}
+
+/*
+==============================================
+jumpOut
+==============================================
+*/
+
+
+.jumpOut{
+	animation-name: jumpOut;
+	-webkit-animation-name: jumpOut;	
+
+	animation-duration: 0.7s;	
+	-webkit-animation-duration: 0.7s;
+
+	animation-timing-function: ease;	
+	-webkit-animation-timing-function: ease;
+
+	visibility: visible !important;	
+}
+
+@keyframes jumpOut {
+	0% {
+		transform: translateY(0%) scale(1) scaleY(1);
+	}
+	100%{
+		 transform: translateY(100%) scale(0.6) scaleY(0.5);
+	}	
+}
+
+@-webkit-keyframes jumpOut {
+	0% {
+		-webkit-transform: translateY(0%) scale(1) scaleY(1);
+	}
+	100%{
+		 -webkit-transform: translateY(100%) scale(0.6) scaleY(0.5);
+	}	
 }
