@@ -19,6 +19,11 @@ The live slideshow is controlled using the arrow keys.
 ### Backtracking
 - **←** will take the slideshow to previous slide in the continuous linear progression. 
 - **↑** will take the slideshow to last point of departure. If a user is on a tangent, pressing **↑** will return to the origin of the tangent.
+- **page up** will take the slideshow to the initial point of departure from the initial track. This is an experimental feature that may behave unexpectedly in complex slideshow structures.
+
+### Jumping
+- **esc** will jump to slides that are out of order. See "Slide Jumping Syntax" for more information
+
 
 ### Jumping
 - **esc** will jump to slides that are out of order. See "Slide Jumping Syntax" for more information

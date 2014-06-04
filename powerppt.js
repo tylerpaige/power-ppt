@@ -91,6 +91,19 @@
                                 cur = target;
                             }
                             break;
+                        case 33: //pageUp, experimental
+                        	if(cur.parent().hasClass(slideClass)){
+                        		var parents = cur.parents('.'+slideClass), //all parent slides
+                        			index = cur, //save the current slide
+                        			target = parents[parents.length-1]; //determine root parent as last slide in array
+	                        	$(target).addClass('visible'); //
+	                        	index.addClass('slideOut recent').one(transitionEnd, function() {
+                        		    $(this).removeClass('visible slideOut recent');
+                        		    $(target).removeClass('slideOut recent');
+                        		});
+                        		cur = $(target);
+	                        }
+                        	break;
                         case 37: //left arrow
                             index = $(cur).siblings(slide).addBack().index(cur);
                             if(index > 0){
