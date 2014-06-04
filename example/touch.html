@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../powerppt.css" />
+<link rel="stylesheet" type="text/css" href="css/reset.css" />
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<script src="../depend/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="../depend/jquery.touchSwipe.min.js" type="text/javascript"></script>
+<script src="../powerppt.touch.js" type="text/javascript"></script>
+<script>
+$(function() {	
+    $('#container').powerPPT({
+        controls: true,
+        loader: 'img/loader-white.gif'
+    });
+});
+</script>	
+</head>
+<body>
+<div id="container">
+
+    <div class="slide one">
+        <div class="content">
+            <h1>Slide #1! Go to the right!</h1>
+        </div>
+    </div>
+    <div class="slide two">
+        <div class="content yellow shadow">
+            <h1 class="center">This stack will show you different background image fitting options. Go down to see the pre-packaged options.</h1>
+            <div class="caption">If this image takes a while to load, you'll see a "Image Loading" indicator at the top of the screen. That's activated with the loader option!</div>
+            <img src="img/big-example.jpg"/>
+        </div>
+        <div class="slide">
+            <div class="content yellow shadow stretch">
+                <h1>Adding '.stretch' to a slide's '.content' element will stretch the background image to fit either the width or height.</h1>
+                <img src="img/big-example.jpg"/>
+            </div>
+            <div class="slide">
+                <div class="content yellow shadow fill">
+                    <h1>Adding '.fill' will fill the entire frame with the background image, keeping it centered.</h1>
+                    <img src="img/big-example.jpg"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide three">
+        <div class="content">
+            <h1>This stack will show you different ways you can style text. By default, an element will be centered when it's inside the '.content' element.</h1>
+        </div>
+        <div class="slide">
+            <div class="content white">
+                <h1>You can make this text white by adding the class '.white'</h1>
+            </div>
+            <div class="slide">
+                <div class="content yellow">
+                    <h1>...Or yellow with '.yellow'</h1>
+                </div>
+                <div class="slide">
+                    <div class="content shadow">
+                        <h1>...Or give it a slight dropshadow</h1>
+                    </div>
+                    <div class="slide">
+                        <div class="content outline">
+                            <h1>...Or an outline</h1>
+                        </div>
+                        <div class="slide">
+                            <div class="content white shadow outline">
+                                <h1>Or any combination of those!</h1>
+                                <div class="caption">If the text has been set to white or yellow, adding an outline will automatically make the outline black.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="content yellowOutline">
+                            <h1>Check out a <i>yellow</i> outline</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide four">
+        <div class="content">
+            <div class="caption">You can automatically style text to be captions. This stack will show you a few options</div>
+        </div>
+        <div class="slide">
+            <div class="content">
+                <div class="caption block">Captions can be knocked out of the slide by adding the '.block' class to the caption element.</div>
+            </div>
+            <div class="slide four">
+                <div class="content">
+                    <div class="caption gradient">Or they can be a hideous gradient! Use the '.gradient' class</div>
+                </div>
+                <div class="slide">
+                    <div class="content">
+                        <div class="caption whiteGradient">Or a hideous <i>white</i> gradient!!! Use '.whiteGradient'</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide text">
+    	<div class="content">
+    	    <h1>Check out a slide with the '.text' class</h1>
+    	    <p>Here's a slide text. It's formatted different and should help make reading large blocks of text easier.</p>
+    	    <p>To go crema black ut skinny in foam. Single origin robust spoon, so variety siphon at trifecta. At ristretto latte, est fair trade percolator strong eu café au lait. Con panna strong robusta so, as filter americano percolator cinnamon. Beans, crema, spoon caffeine ristretto et chicory.</p>
+    	    <p>Aroma eu, arabica flavour, extra café au lait carajillo blue mountain brewed cinnamon siphon. Id brewed in kopi-luwak strong wings plunger pot steamed plunger pot medium. Plunger pot filter, aftertaste kopi-luwak, siphon turkish aroma, organic ut that roast organic. Trifecta black organic that, redeye single shot froth irish con panna. In, arabica flavour, con panna caffeine cultivar white crema aged.</p>
+    	    <p>Aged, bar variety robusta crema decaffeinated percolator as iced filter aftertaste single origin. Barista sit turkish, carajillo siphon eu doppio fair trade aged. Turkish café au lait siphon viennese pumpkin spice skinny body carajillo mocha spoon galão. Ristretto, ut, doppio caramelization robust ut white brewed medium doppio. Skinny eu, qui blue mountain medium barista strong.</p>
+    	    <p>Filter et variety foam so shop crema. Wings, siphon latte cappuccino robust mocha seasonal single shot latte half and half to go java. Single shot con panna, body, java grinder french press beans espresso. Grinder at affogato café au lait, lungo doppio lungo extraction single shot. Dark trifecta strong, kopi-luwak brewed milk in latte.</p>
+    	</div>
+    </div>
+    <div id="jump-start" class="slide" data-target="#jump-end">
+    	<div class="content">
+    		<div class="center">
+	    		<h1>We can also jump out of the HMTL order, too.</h1>
+	    		<p>This is an experimental feature, but if you would like, we can use powerppt to jump from one slide to any other slide, even if the target slide is not the next one in the HTML structure.</p>
+	    		<h3>Try it out! Hit escape on this slide.</h3>
+    		</div>
+    	</div>
+    	<div class="slide">
+    		<div class="content">
+    			<h1>↑↑↑</h1>
+    		</div>
+    		<div id="jump-end" class="slide">
+    			<div class="content">
+    				<h1>Here we are!</h1>
+    				<p>We jumped from a slide to two tangent down, skipping the logical next slide between them. If you hit the up arrow key twice, we'll end up back where we were.</p>
+    				<p>As an added bonus, when you jump to a slide, powerPPT remembers where you were. If you hit escape again, you will be brought back there.</p>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+</body>
+</html>
