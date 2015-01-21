@@ -1,152 +1,230 @@
-(function($){ 
-    $.fn.extend({
-        powerPPT: function(options) {
-            var defaults = {
-                bgimgs: true,
-                controls: false,
-                loader: false,
-                origin: false,
-                slide: '.slide'
-            }
-            
-            var options = $.extend(defaults, options);
-            
-            return this.each(function() {
-                var o = options,
-                    transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd',
-                    index,
-                    cur,
-                    save = null,
-                    slide = o.slide,
-                    slides = $(this).find(slide),
-                    slideClass = slide.substr(1);
-                if(o.loader != false){
-                    var loader = '<div class="loader"><img src="'+o.loader+'" /><br/>img loading</div>';
-                } else {
-                    var loader;
-                }
-                    
-                if(o.origin == false){ cur = $(this).find(slide).eq(0); }
-                else { cur = $(this).find(o.origin); }
-                $(cur).addClass('visible');
-                
-                if(o.controls==true){
-                    var controlsMarkup = '<div id="controls"><div class="up">↑</div><div class="left">←</div><div class="right">→</div><div class="down">↓</div></div>';
-                    $(this).prepend(controlsMarkup);
-                    var controls = $('#controls'),
-                        conUp = $(controls).children('.up'),
-                        conRight = $(controls).children('.right'),
-                        conDown = $(controls).children('.down'),
-                        conLeft = $(controls).children('.left'),
-                        manageControls = function(slide) {
-                            if(slide.parent().hasClass(slideClass) == false){ $(conUp).css('visibility','hidden'); }
-                            else if($(conUp).css('visibility') == 'hidden') { $(conUp).css('visibility','visible'); }
-                            
-                            if((slide.next().hasClass(slideClass) == false) && (slide.hasClass('jump') == false)){ $(conRight).css('visibility','hidden'); }
-                            else if($(conRight).css('visibility') == 'hidden') { $(conRight).css('visibility','visible'); }
-                            
-                            if(slide.prev().hasClass(slideClass) == false){ $(conLeft).css('visibility','hidden'); }
-                            else if($(conLeft).css('visibility') == 'hidden') { $(conLeft).css('visibility','visible'); }
-                            
-                            if(slide.children('.'+slideClass).length <= 0){ $(conDown).css('visibility','hidden'); }
-                            else if($(conDown).css('visibility') == 'hidden') { $(conDown).css('visibility','visible'); }
-                        };
-                } else {
-                    var manageControls = function(){ return false; };
-                }
-                if(o.bgimgs == true){
-                    $.each(slides, function() {
-                         var slide = $(this).not(o.bgignore).children('.content'),
-                             img = $(slide).children('img').eq(0);
-                         if(img.length > 0){
-                             var url = $(img).attr('src');
-                             $(img).hide();
-                             $(slide).prepend(loader);
-                             $(img).one('load', function(){
-                                 $(slide).css("background-image", "url('"+url+"')").children('.loader').remove();
-                                 $(img).remove();
-                             });
-                         }
-                    });
-                }
-                
-                $(document).keydown(function(event) {
-                    switch (event.keyCode) {
-                        case 27: //escape key
-                            if(cur.attr('data-target')){ //if this slide has a target for an escape
-                                save = cur, //save the current slide for reference
-                                target = save.attr('data-target'); //set the target
-                                cur = $(target); //make the target the current slide
-                                cur.addClass('jumpIn recent').one(transitionEnd, function() {
-                                	$(save).removeClass('visible');
-                                    $(this).addClass('visible').removeClass('jumpIn recent');
-                                });
-                            } else if(save != null){ //if slide doesn't have an escape, but does have a save state (I.E. it was the target of an escape)
-                                target = save;
-                                save = null;
-                                target.addClass('visible');
-                                cur.addClass('jumpOut').one(transitionEnd, function() {
-                                    $(this).removeClass('visible jumpOut recent');
-                                });
-                                cur = target;
-                            }
-                            break;
-                        case 37: //left arrow
-                            index = $(cur).siblings(slide).addBack().index(cur);
-                            if(index > 0){
-                                target = index-1;
-                                cur = $(cur).siblings(slide).addBack().eq(target);
-                                
-                                $(cur).addClass('slideRight recent').one(transitionEnd, function() {
-                                   $(this).addClass('visible').removeClass('slideRight recent').nextAll().removeClass('visible slideRight recent');
-                                });
-                                $('.recent').not(cur).removeClass('recent'); //Only most recent advance should be called "Recent"
-                            }
-                            break;
-                        case 38: //up arrow
-                            if($(cur).parent().hasClass(slideClass)){ // only ascend if the target is a slide, not the container
-                                index = cur;
-                                cur = cur.parent();
-                                index.siblings('.content').parent().addBack().addClass('visible');
-                                index.addClass('slideOut').one(transitionEnd, function() {
-                                    $(this).removeClass('visible slideOut').siblings().removeClass('slideOut recent visible');
-                                });
-                            }
-                            break;
-                        case 39: //right arrow
-                            index = $(cur).siblings(slide).addBack().index(cur);
-                            if(index < $(cur).siblings(slide).length){
-                                target = index+1; 
-                                cur = $(cur).siblings(slide).addBack().eq(target);    		
-                                $(cur).addClass('slideLeft recent').one(transitionEnd, function(){ 
-                                    $(this).addClass('visible').removeClass('slideLeft recent').prevAll().removeClass('visible slideLeft slideRight recent');
-                                }); 
-                                $('.recent').not(cur).removeClass('recent');
-                            } else if($(cur).hasClass('jump')) {
-                                target = cur.attr('data-target');
-                                cur = $(target);
-                                $(cur).addClass('slideLeft recent').one(transitionEnd, function(){ 
-                                    $('.visible').not(cur).removeClass('visible slideLeft slideRight recent');
-                                    $(this).addClass('visible').removeClass('slideLeft recent');
-                                }); 
-                                $('.recent').not(cur).removeClass('recent');
-                            }
-                            break;
-                        case 40: //down arrow
-                            if($(cur).children(slide).length > 0){
-                                cur = $(cur).children(slide).eq(0);
-                                $(cur).addClass('slideUp').one(transitionEnd, function() {
-                                    $(this).addClass('visible').removeClass('slideUp').parent('.visible').removeClass('visible');
-                                });
-                            }
-                            break;
-                    }
-                    manageControls(cur);
-                });
-                 
-                 manageControls($(cur));
-                 
-            });
+(function($){;
+  $.fn.extend({
+    powerPPT: function(options) {
+      var defaults = {
+        bgImgs       : false,
+        bgIgnore     : '.ignore',
+        controlPad   : false,
+        hotSpotCtrls : true,
+        loader       : false,
+        origin       : false,
+        slide        : '.slide'
+      }
+
+      var options = $.extend(defaults, options);
+
+      return this.each(function() {
+        var ppt = this, //the container
+        o = options, //merged options
+        transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend animationEnd webkitAnimationEnd MSAnimationEnd oAnimationEnd',
+        index,
+        cur, //currently displayed slide
+        save = null, //saved slide for jumps
+        slideSlctr = o.slide, //slide selector
+        slideClass = slideSlctr.substr(1), //slide class name
+        slides = $(ppt).find(slideSlctr), //array of all slides
+        loader; //will be markup for a image loading bar
+
+        //If enabled, create markup for loading bar
+        if(o.loader != false){
+          var loader = ''+
+          '<div class="loader">'+
+          '<img src="'+o.loader+'" />'+
+          '<br/>img loading'+
+          '</div>';
         }
-    });
+
+        //If enable, set the starting position to the specified slide
+        if(o.origin == false){
+          cur = $(ppt).find(slideSlctr).eq(0);
+        } else {
+          cur = $(ppt).find(o.origin);
+        }
+        $(cur).addClass('visible');
+
+        //If enabled, overlay the controlPad
+        var manageControlPad;
+        if(o.controlPad == true){
+          var controlPadMarkup = ''+
+          '<div id="controlPad">'+
+            '<div class="up">↑</div>'+
+            '<div class="left">←</div>'+
+            '<div class="right">→</div>'+
+            '<div class="down">↓</div>'+
+          '</div>';
+          $(ppt).prepend(controlPadMarkup);
+
+          var controlPad = $('#controlPad'),
+              upArrow = $(controlPad).children('.up'),
+              downArrow = $(controlPad).children('.down'),
+              rightArrow = $(controlPad).children('.right'),
+              leftArrow = $(controlPad).children('.left');
+
+          $(upArrow).click(function() {
+            cur = slideUp(cur);
+            manageControlPad(cur);
+          });
+          $(downArrow).click(function() {
+            cur = slide(cur, 'down');
+            manageControlPad(cur);
+          });
+          $(rightArrow).click(function() {
+            cur = slide(cur, 'right');
+            manageControlPad(cur);
+          });
+          $(leftArrow).click(function() {
+            cur = slide(cur, 'left');
+            manageControlPad(cur);
+          });
+
+          manageControlPad = function(slide) {
+            //toggle up arrow
+            if(slide.parent().hasClass(slideClass) == false){ $(upArrow).css('visibility','hidden'); }
+            else if($(upArrow).css('visibility') == 'hidden') { $(upArrow).css('visibility','visible'); }
+            //toggle bottom arrow
+            if(slide.children('.'+slideClass).length <= 0){ $(downArrow).css('visibility','hidden'); }
+            else if($(downArrow).css('visibility') == 'hidden') { $(downArrow).css('visibility','visible'); }
+            //toggle right arrow
+            if((slide.next().hasClass(slideClass) == false) && (slide.hasClass('jump') == false)){ $(rightArrow).css('visibility','hidden'); }
+            else if($(rightArrow).css('visibility') == 'hidden') { $(rightArrow).css('visibility','visible'); }
+            //toggle left arrow
+            if(slide.prev().hasClass(slideClass) == false){ $(leftArrow).css('visibility','hidden'); }
+            else if($(leftArrow).css('visibility') == 'hidden') { $(leftArrow).css('visibility','visible'); }
+          }
+        } else {
+          manageControlPad = function(){ }
+        }
+
+        //if enabled, create clickable hotspots for users to advance the slideshow
+        if(o.hotSpotCtrls) {
+          var locs = ['up', 'down', 'right', 'left'];
+          for(var i = 0; i < locs.length; i++) {
+            var direction = locs[i];
+            var elm = document.createElement('div');
+            elm.className = 'hotspot '+direction;
+            $(ppt).prepend(elm);
+          }
+          $('.hotspot.up').click(function() {
+            cur = slideUp(cur);
+            manageControlPad(cur);
+          });
+          $('.hotspot.down').click(function() {
+            cur = slide(cur, 'down');
+            manageControlPad(cur);
+          });
+          $('.hotspot.right').click(function() {
+            cur = slide(cur, 'right');
+            manageControlPad(cur);
+          });
+          $('.hotspot.left').click(function() {
+            cur = slide(cur, 'left');
+            manageControlPad(cur);
+          });
+        }
+
+        //if enabled, give slides with images a background-image
+        if(o.bgImgs == true){
+          $.each(slides, function() {
+            var i = $(this).not(o.bgIgnore).children('.content'),
+            img = $(i).children('img').eq(0);
+            if(img.length > 0){
+              var url = $(img).attr('src');
+              $(img).hide();
+              $(i).prepend(loader);
+              $(img).one('load', function(){
+                $(i).css("background-image", "url('"+url+"')").children('.loader').remove();
+                $(img).remove();
+              });
+            }
+          });
+        }
+
+        function clearClasses(slide, animation) {
+          $(slide)
+            .addClass('visible')
+            .removeClass(animation + ' recent')
+            .nextAll();
+          $('.visible').not(slide)
+            .removeClass('visible');
+        }
+
+        function declareRecent(slide) {
+          $('.recent').removeClass('recent');
+          $(slide).addClass('recent');
+        }
+
+        function slide(slide, direction) {
+          var targets,
+              target,
+              animation;
+          switch(direction) {
+            case 'right':
+              targets = $(slide).nextAll(slideSlctr);
+              animation = 'slideRight';
+              break;
+            case 'left':
+              targets = $(slide).prevAll(slideSlctr);
+              animation = 'slideLeft';
+              break;
+            case 'down':
+              targets = $(slide).children(slideSlctr);
+              animation = 'slideDown';
+              break;
+          }
+          if(targets.length > 0) {
+            target = targets.eq(0);
+            $(target)
+              .addClass(animation)
+              .one(transitionEnd, function(){
+                clearClasses(target, animation)
+              });
+            declareRecent(target);
+            return target;
+          } else {
+            return slide;
+          }
+        }
+
+        //This one's gotta work a little differently...
+        function slideUp(slide) {
+          var parent = $(slide).parent(),
+              target;
+          if($(parent).hasClass(slideClass)) {
+            target = $(slide).siblings('.content');
+            $(target)
+              .addClass('slideUp')
+              .one(transitionEnd, function() {
+                $(slide).removeClass('visible');
+                $(parent).addClass('visible');
+                $(target).removeClass('slideUp recent');
+              });
+            declareRecent(target);
+            return parent;
+          } else {
+            return slide;
+          }
+        }
+
+        $(document).keydown(function(event) {
+          switch(event.keyCode) {
+            case 39: //right arrow
+              cur = slide(cur, 'right');
+              break;
+            case 37: //left arrow
+              cur = slide(cur, 'left');
+              break;
+            case 40: //down arrow
+              cur = slide(cur, 'down')
+              break;
+            case 38: //up arrow
+              cur = slideUp(cur);
+              break;
+          }
+          manageControlPad(cur);
+        });
+
+        manageControlPad(cur);
+      });
+    }
+  });
 })(jQuery);

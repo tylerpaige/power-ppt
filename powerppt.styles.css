@@ -1,0 +1,120 @@
+/*This stylsheets assumes...
+- all slides are within the container #container
+- all slides are matched with the selector .slide
+- the #container is an immediate child of the body. */
+
+/* Image fitting styles */
+.content {
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+}
+.stretch, .contain{
+    background-size: contain;
+}
+.fill, .cover{
+    background-size: cover;
+}
+
+/* Text slides */
+.slide.text{
+    background: whitesmoke;
+    height: auto;
+}
+.slide.text.visible{
+    overflow-y: visible;
+}
+.slide.text>.content{
+    width: 50%;
+    max-width: 700px;
+    margin: auto;
+    padding-top: 5%;
+    text-align: left;
+}
+.slide.text>.content p+p,
+.slide.text>.content img+p,
+.slide.text>.content p+img,
+.slide.text>.content p+h1,
+.slide.text>.content h1+p,
+.slide.text>.content p+h2,
+.slide.text>.content h2+p,
+.slide.text>.content p+h3,
+.slide.text>.content h3+p{
+    margin-top: 2.4rem;
+}
+.slide.text>.content p+p{
+    text-indent: 5rem;
+}
+
+/* Caption Styles */
+.content .caption{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5%;
+
+  text-align: center;
+  z-index: 2;
+}
+.caption.gradient{
+  bottom: 0;
+  padding: 4% 0 2% 0;
+
+  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+
+  color: white;
+}
+.caption.whiteGradient{
+  bottom: 0;
+  padding: 4% 0 2% 0;
+
+  background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0.65))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00FFFFFF', endColorstr='#a6FFFFFF',GradientType=0 ); /* IE6-9 */
+
+  color: black;
+}
+.caption.block{
+  background: whitesmoke;
+}
+
+/* Centered Text options (not captions) */
+.slide:not(.text)>.content>*:not(.content):only-child, .slide>.content>.center{
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 25%;
+}
+
+/* Text styles for captions and not */
+.black{
+  color: black;
+}
+.white{
+  color: white;
+}
+.yellow{
+  color: yellow;
+}
+.outline,
+.black.outline{
+  text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
+}
+.white.outline, .yellow.outline{
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+.yellowOutline{
+  text-shadow: 1px 0 0 yellow, 0 -1px 0 yellow, 0 1px 0 yellow, -1px 0 0 yellow;
+}
+.shadow{
+  text-shadow: 0 0 10px rgba(0,0,0,.4);
+}

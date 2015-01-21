@@ -4,37 +4,37 @@
 - the #container is an immediate child of the body. */
 
 html{
-    font-size: 62.5%;
-    font-family: Georgia, Garamond, Baskerville, serif;
-    line-height: 2.6rem;
+  font-size: 62.5%;
+  line-height: 2.6rem;
 }
-html, body{
+html,
+body{
 	width: 100%;
 	height: 100%;
 }
 #container{
-    width: 100%;
-    height: 100%;
-    position: relative;
-	background: black;
+  width: 100%;
+  height: 100%;
+  position: relative;
 	overflow-x: hidden;
 	overflow-y: visible;
 }
 .slide{
-    visibility: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    background: black;
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: white;
 }
 .slide .content{
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 	font-size: 2.4rem;
 	position: relative;
 	display: table;
@@ -42,181 +42,121 @@ html, body{
 
 /* Basic Styles for function */
 .visible{
-    visibility: visible;
-    z-index: 800;
+  visibility: visible;
+  z-index: 800;
 }
-.slideDown, .slideOut, .slideUp, .slideLeft, .slideRight{
-    z-index: 900;
+.slideUp,
+.slideLeft,
+.slideRight,
+.slideOut{
+  z-index: 900;
+}
+.slideOut{
+  z-index: 901;
+}
+.recent,
+.slide.recent,
+.slideLeft.recent,
+.slideRight.recent,
+.slideUp.recent,
+.downArrow.recent{ /*The most recent slide change should be on top*/
+  z-index: 1000;
+}
+.fixed{
+  position: fixed:
 }
 
 /* Loader */
 .firstLoad{
-    display: none;
+  display: none;
 }
 .loader{
-    width: 90px;
-    height: 40px;
-    position: fixed;
-    left: 50%;
-    top: 0;
-    margin-left: -30px;
-    padding-top: 12px;
-    background: rgba(0,0,0,.9);
-    color: white;
-    text-align: center;
-    font-size: 1.0rem;
-    font-style: italic;
-    z-index: 1000;
+  width: 90px;
+  height: 40px;
+  position: fixed;
+  left: 50%;
+  top: 0;
+  margin-left: -30px;
+  padding-top: 12px;
+  background: rgba(0,0,0,.9);
+  color: white;
+  text-align: center;
+  font-size: 1.0rem;
+  font-style: italic;
+  z-index: 1000;
 }
 
-/* Controls */
-#controls{
-    width: 62px;
-    position: absolute;
-    left: 15px;
-    font-size: 14pt;
-    color: black;
-    text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
-    z-index: 1001;
+/* Control Pad (shows available directions) */
+#controlPad{
+  width: 62px;
+  position: absolute;
+  left: 15px;
+  z-index: 1002;
+  font-size: 14pt;
+  color: black;
+  text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
 }
-.up, .down{
-    height: 22px;
-    clear: both;
-    text-align: center;
+#controlPad>div{
+  cursor: pointer;
 }
-.left, .right{
-    width: 20px;
-    height: 22px;
+#controlPad .up,
+#controlPad .down{
+  height: 22px;
+  clear: both;
+  text-align: center;
 }
-.left{
-    float: left;
-    text-align: left;
+#controlPad .left,
+#controlPad .right{
+  width: 20px;
+  height: 22px;
 }
-.right{
-    float: right;
-    text-align: right;
+#controlPad .left{
+  float: left;
+  text-align: left;
 }
-.right::after{
-    clear: both;
-    content: '';
+#controlPad .right{
+  float: right;
+  text-align: right;
 }
-
-
-/* Image fitting styles */
-.content {
-    background-repeat: no-repeat;
-    background-position: center;
-    text-align: center;
-}
-.stretch, .contain{
-    background-size: contain;
-}
-.fill, .cover{
-    background-size: cover;
+#controlPad .right::after{
+  clear: both;
+  content: '';
 }
 
-/* Text slides */
-.slide.text{
-    background: whitesmoke;
-    height: auto;
+/* Hot Spot Controls (invisible area for clicking directions)*/
+.hotspot{
+  z-index: 10001;
+  position: absolute;
 }
-.slide.text.visible{
-    overflow-y: visible;
+.hotspot.up,
+.hotspot.down{
+  width: 90%;
+  height: 5%;
+  max-height: 50px;
+  left: 5%;
 }
-.slide.text>.content{
-    width: 50%;
-    max-width: 700px;
-    margin: auto;
-    padding-top: 5%;
-    text-align: left;
+.hotspot.up{
+  top: 0;
+  cursor: n-resize;
 }
-.slide.text>.content p+p, .slide.text>.content img+p, .slide.text>.content p+img,
-.slide.text>.content p+h1, .slide.text>.content h1+p,
-.slide.text>.content p+h2, .slide.text>.content h2+p,
-.slide.text>.content p+h3, .slide.text>.content h3+p{
-    margin-top: 2.4rem;
+.hotspot.down{
+  bottom: 0;
+  cursor: s-resize;
 }
-.slide.text>.content p+p{
-    text-indent: 5rem;
+.hotspot.left,
+.hotspot.right{
+  width: 5%;
+  max-width: 25px;
+  height: 90%;
+  top: 5%;
 }
-
-/* Caption Styles */
-.content .caption{
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 5%;
-    
-    text-align: center;
-    z-index: 2;
+.hotspot.left{
+  left: 0;
+  cursor: w-resize;
 }
-.caption.gradient{
-    bottom: 0;
-    padding: 4% 0 2% 0;
-
-    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
-    
-    color: white;
-}
-
-.caption.whiteGradient{
-    bottom: 0;
-    padding: 4% 0 2% 0;
-
-    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0.65))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.65) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00FFFFFF', endColorstr='#a6FFFFFF',GradientType=0 ); /* IE6-9 */
-    
-    color: black;
-}
-.caption.block{
-    background: whitesmoke;
-}
-
-/* Centered Text options (not captions) */
-
-.slide:not(.text)>.content>*:not(.content):only-child, .slide>.content>.center{
-    display: table-cell;
-    vertical-align: middle;
-    padding: 0 25%;
-}
-
-/* Text styles for captions and not */
-.black{ color: black; }
-.white{ color: white; }
-.yellow{ color: yellow; }
-.outline, .black.outline{
-    text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
-}
-.white.outline, .yellow.outline{
-    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
-}
-.yellowOutline{
-    text-shadow: 1px 0 0 yellow, 0 -1px 0 yellow, 0 1px 0 yellow, -1px 0 0 yellow;
-}
-.shadow{
-    text-shadow: 0 0 10px rgba(0,0,0,.4);
-}
-
-
-
-
-/* Misc Fixes */
-.slideDown, {
-    z-index: 1000;
-}
-.recent, .slide.recent, .slideLeft.recent, .slideRight.recent, .slideUp.recent, .slideDown.recent{ /*The most recent slide change should be on top*/
-    z-index: 1000;
+.hotspot.right{
+  right: 0;
+  cursor: e-resize;
 }
 
 
@@ -224,36 +164,36 @@ html, body{
 Available here: www.justinaguilar.com/animations/ */
 /*
 ==============================================
-slideDown
+slideUp
 ==============================================
 */
-.slideDown{
-	animation-name: slideDown;
-	-webkit-animation-name: slideDown;	
+.slideUp{
+	animation-name: slideUp;
+	-webkit-animation-name: slideUp;
 
-	animation-duration: 1s;	
+	animation-duration: 1s;
 	-webkit-animation-duration: 1s;
 
-	animation-timing-function: ease;	
-	-webkit-animation-timing-function: ease;	
+	animation-timing-function: ease;
+	-webkit-animation-timing-function: ease;
 
-	visibility: visible !important;						
+	visibility: visible !important;
 }
-@keyframes slideDown {
+@keyframes slideUp {
 	0% {
 		transform: translateY(-100%);
-	}			
+	}
 	100% {
 		transform: translateY(0%);
-	}		
+	}
 }
-@-webkit-keyframes slideDown {
+@-webkit-keyframes slideUp {
 	0% {
 		-webkit-transform: translateY(-100%);
-	}			
+	}
 	100% {
 		-webkit-transform: translateY(0%);
-	}	
+	}
 }
 
 /*
@@ -265,98 +205,64 @@ slideOut
     z-index: 900;
 
 	animation-name: slideOut;
-	-webkit-animation-name: slideOut;	
+	-webkit-animation-name: slideOut;
 
-	animation-duration: 1s;	
+	animation-duration: 1s;
 	-webkit-animation-duration: 1s;
 
-	animation-timing-function: ease;	
-	-webkit-animation-timing-function: ease;	
+	animation-timing-function: ease;
+	-webkit-animation-timing-function: ease;
 
-	visibility: visible !important;						
+	visibility: visible !important;
 }
 @keyframes slideOut {
 	0% {
 		transform: translateY(0%);
-	}			
+	}
 	100% {
 		transform: translateY(100%);
-	}		
+	}
 }
 @-webkit-keyframes slideOut {
 	0% {
 		-webkit-transform: translateY(0%);
-	}			
+	}
 	100% {
 		-webkit-transform: translateY(100%);
-	}	
+	}
 }
 
 /*
 ==============================================
-slideUp
+slideDown
 ==============================================
 */
-.slideUp{
-	animation-name: slideUp;
-	-webkit-animation-name: slideUp;	
+.slideDown{
+	animation-name: slideDown;
+	-webkit-animation-name: slideDown;
 
-	animation-duration: 1s;	
+	animation-duration: 1s;
 	-webkit-animation-duration: 1s;
 
-	animation-timing-function: ease;	
+	animation-timing-function: ease;
 	-webkit-animation-timing-function: ease;
 
-	visibility: visible !important;			
+	visibility: visible !important;
 }
-@keyframes slideUp {
+@keyframes slideDown {
 	0% {
 		transform: translateY(100%);
-	}			
+	}
 	100% {
 		transform: translateY(0%);
-	}	
+	}
 }
-@-webkit-keyframes slideUp {
+@-webkit-keyframes slideDown {
 	0% {
 		-webkit-transform: translateY(100%);
-	}			
+	}
 	100% {
 		-webkit-transform: translateY(0%);
-	}	
-}
-
-/*
-==============================================
-slideLeft
-==============================================
-*/
-.slideLeft{
-	animation-name: slideLeft;
-	-webkit-animation-name: slideLeft;	
-
-	animation-duration: 1s;	
-	-webkit-animation-duration: 1s;
-
-	animation-timing-function: ease-in-out;	
-	-webkit-animation-timing-function: ease-in-out;		
-
-	visibility: visible !important;	
-}
-@keyframes slideLeft {
-	0% {
-		transform: translateX(150%);
-	}		
-	100% {
-		transform: translateX(0%);
-	}
-}
-@-webkit-keyframes slideLeft {
-	0% {
-		-webkit-transform: translateX(150%);
-	}
-	100% {
-		-webkit-transform: translateX(0%);
 	}
 }
 
@@ -367,28 +273,62 @@ slideRight
 */
 .slideRight{
 	animation-name: slideRight;
-	-webkit-animation-name: slideRight;	
+	-webkit-animation-name: slideRight;
 
-	animation-duration: 1s;	
+	animation-duration: 1s;
 	-webkit-animation-duration: 1s;
 
-	animation-timing-function: ease-in-out;	
-	-webkit-animation-timing-function: ease-in-out;		
+	animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
 
-	visibility: visible !important;	
+	visibility: visible !important;
 }
 @keyframes slideRight {
+	0% {
+		transform: translateX(150%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
+}
+@-webkit-keyframes slideRight {
+	0% {
+		-webkit-transform: translateX(150%);
+	}
+	100% {
+		-webkit-transform: translateX(0%);
+	}
+}
+
+/*
+==============================================
+slideLeft
+==============================================
+*/
+.slideLeft{
+	animation-name: slideLeft;
+	-webkit-animation-name: slideLeft;
+
+	animation-duration: 1s;
+	-webkit-animation-duration: 1s;
+
+	animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
+
+	visibility: visible !important;
+}
+@keyframes slideLeft {
 	0% {
 		transform: translateX(-150%);
 	}
 	100% {
 		transform: translateX(0%);
-	}	
+	}
 }
-@-webkit-keyframes slideRight {
+@-webkit-keyframes slideLeft {
 	0% {
 		-webkit-transform: translateX(-150%);
-	}		
+	}
 	100% {
 		-webkit-transform: translateX(0%);
 	}
@@ -403,15 +343,15 @@ jumpIn
 
 .jumpIn{
 	animation-name: jumpIn;
-	-webkit-animation-name: jumpIn;	
+	-webkit-animation-name: jumpIn;
 
-	animation-duration: 0.7s;	
+	animation-duration: 0.7s;
 	-webkit-animation-duration: 0.7s;
 
-	animation-timing-function: ease;	
+	animation-timing-function: ease;
 	-webkit-animation-timing-function: ease;
 
-	visibility: visible !important;	
+	visibility: visible !important;
 }
 
 @keyframes jumpIn {
@@ -420,7 +360,7 @@ jumpIn
 	}
 	100% {
 		transform: translateY(0%) scale(1) scaleY(1);
-	}	
+	}
 }
 
 @-webkit-keyframes jumpIn {
@@ -429,7 +369,7 @@ jumpIn
 	}
 	100% {
 		-webkit-transform: translateY(0%) scale(1) scaleY(1);
-	}	
+	}
 }
 
 /*
@@ -441,15 +381,15 @@ jumpOut
 
 .jumpOut{
 	animation-name: jumpOut;
-	-webkit-animation-name: jumpOut;	
+	-webkit-animation-name: jumpOut;
 
-	animation-duration: 0.7s;	
+	animation-duration: 0.7s;
 	-webkit-animation-duration: 0.7s;
 
-	animation-timing-function: ease;	
+	animation-timing-function: ease;
 	-webkit-animation-timing-function: ease;
 
-	visibility: visible !important;	
+	visibility: visible !important;
 }
 
 @keyframes jumpOut {
@@ -458,7 +398,7 @@ jumpOut
 	}
 	100%{
 		 transform: translateY(100%) scale(0.6) scaleY(0.5);
-	}	
+	}
 }
 
 @-webkit-keyframes jumpOut {
@@ -467,5 +407,5 @@ jumpOut
 	}
 	100%{
 		 -webkit-transform: translateY(100%) scale(0.6) scaleY(0.5);
-	}	
+	}
 }
